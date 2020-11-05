@@ -15,6 +15,7 @@ namespace UnitTests
         public void GeneratePathTest()
         {
             Network network = Network.GenerateSampleNetwork();
+            network.GenerateRoutingTables();
             List<string> path = network.GeneratePath("R3", "R8");
             Assert.AreEqual(4, path.Count);
             Assert.AreEqual("R3", path[0]);
@@ -27,6 +28,7 @@ namespace UnitTests
         public void GenerateRoutingTablesTest()
         {
             Network network = Network.GenerateSampleNetwork();
+            network.GenerateRoutingTables();
 
             var table = network.Routers["R3"].ForwardingTable;
             Assert.AreEqual(3, table.Entries["R8"].Cost);
@@ -35,7 +37,7 @@ namespace UnitTests
 
             table = network.Routers["R6"].ForwardingTable;
             Assert.AreEqual(1, table.Entries["R1"].Cost);
-            Assert.AreEqual("R1", table.Entries["R8"].NextRouter);
+            Assert.AreEqual("R8", table.Entries["R8"].NextRouter);
             Assert.AreEqual("R1", table.Entries["R1"].Destination);
         }
 
